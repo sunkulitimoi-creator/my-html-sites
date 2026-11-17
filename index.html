@@ -6,15 +6,17 @@
   <title>Home</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/animations.css"> 
 </head>
 <body>
   <header>
     <h1>Welcome to My HTML Site</h1>
   </header>
   <nav>
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="register.html" class="register-link">Register</a>
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="register.html" class="nav-link register-link">Register</a>
+    <a href="tribute.html" class="nav-link">Tribute</a>
   </nav>
   <main>
     <div class="layout">
@@ -29,7 +31,17 @@
         <h2>Home</h2>
         <p>This is the home page of my first website. On a wide screen the sidebar sits beside this text. On a narrow screen it stacks above it.</p>
       </section>
+
+      <link rel="stylesheet" href="css/animations.css">
+      <button class="btn-animate">Hover me</button>
+      <div class="card-animate">Hover this card</div>
     </div>
+
+    <div class="flip-card"><div class="flip-inner">3D Flip</div></div>
+    <span class="spin-icon">⟳</span>
+
+    <span class="bounce-badge">Live</span>
+    <span class="pulse-dot"></span>
   </main>
   <footer>
     <p>&copy; 2026 Your Name</p>
