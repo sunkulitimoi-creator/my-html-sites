@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive HTML5 APIs Demo</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>HTML5 APIs Demo</h1>
+  </header>
+  <main>
+    <h2>1. File picker</h2>
+    <!-- File input: user picks a file from their device -->
+    <input type="file" id="fileInput">
+
+    <!-- Shows the selected file name and size -->
+    <pre id="fileInfo">No file selected</pre>
+
+    <h2>2. Drag and drop</h2>
+    <!-- Drop zone: user drags an image here -->
+    <div id="dropZone" style="border:2px dashed #64748b;padding:40px;text-align:center;">
+      Drag an image here
+    </div>
+    <!-- Preview image appears here after drop -->
+    <img id="preview" alt="Preview" style="max-width:200px;margin-top:12px;">
+
+    <h2>3. Native media (no plugins)</h2>
+
+    <h3>Video</h3>
+    <!-- Native HTML5 video player (no plugins) -->
+    <video controls width="320">
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+      Your browser does not support the video element.
+    </video>
+
+    <h3>Audio</h3>
+    <!-- Native HTML5 audio player -->
+    <audio controls>
+      <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+
+    <h2>4. Geolocation</h2>
+    <!-- Button triggers location request -->
+    <button id="locBtn">Get my location</button>
+    <!-- Coordinates or error message shown here -->
+    <p id="location">Location not requested yet</p>
+
+    <h2>5. Browser context</h2>
+    <!-- Browser context info displayed on the page -->
+    <pre id="context"></pre>
+  </main>
+
+  <script>
+    // ----- File picker -----
+    document.getElementById('fileInput').addEventListener('change', (e) => {
+      const file = e.target.files[0]; // First file in the selection
+      document.getElementById('fileInfo').textContent =
+        file ? `Name: ${file.name}, Size: ${file.size} bytes` : 'No file selected';
+    });
+
+    // ----- Drop zone -----
+    const dropZone = document.getElementById('dropZone');
+    const preview = document.getElementById('preview');
+
+    // Allow dropping by preventing default on dragover
+    dropZone.addEventListener('dragover', (e) => e.preventDefault());
+
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const file = e.dataTransfer.files[0]; // File dragged onto the zone
+      if (!file || !file.type.startsWith('image/')) return;
+
+      const reader = new FileReader();
+      reader.onload = () => { preview.src = reader.result; }; // Show image preview
+      reader.readAsDataURL(file); // Read file as a data URL for the img src
+    });
+
+    // ----- Geolocation -----
+    document.getElementById('locBtn').addEventListener('click', () => {
+      // Ask browser for device location (user must click Allow)
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          // Success: show latitude and longitude
+          document.getElementById('location').textContent =
+            `Lat: ${pos.coords.latitude}, Lng: ${pos.coords.longitude}`;
+        },
+        () => {
+          // Error: user denied permission or location unavailable
+          document.getElementById('location').textContent = 'Permission denied';
+        }
+      );
+    });
+
+    // ----- Browser context -----
+    // Collect useful browser/device info from the navigator object
+    const ctx = {
+      online: navigator.onLine,       // true if connected to internet
+      language: navigator.language,   // e.g. "en-ZA"
+      mobile: /Mobi|Android/i.test(navigator.userAgent) // detect mobile device
+    };
+    // Show context as formatted JSON on the page
+    document.getElementById('context').textContent = JSON.stringify(ctx, null, 2);
+    // Also log to DevTools Console for debugging (F12 -> Console)
+    console.log('PM-04 debug context:', ctx);
+  </script>
+</body>
+</html>

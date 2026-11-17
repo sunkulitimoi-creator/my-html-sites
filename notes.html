@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline Notes</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Offline Notes</h1>
+  </header>
+  <main>
+    <!-- Shows whether the browser is online or offline -->
+    <p id="onlineStatus"></p>
+
+    <!-- Text area where the user types a note -->
+    <textarea id="note" rows="4" cols="40" placeholder="Type a note..."></textarea><br>
+    <button id="saveBtn">Save locally</button>
+    <button id="loadBtn">Load saved note</button>
+    <p id="status"></p>
+  </main>
+
+  <script>
+    // Save note text to localStorage (persists after refresh)
+    document.getElementById('saveBtn').onclick = () => {
+      localStorage.setItem('offlineNote', document.getElementById('note').value);
+      document.getElementById('status').textContent = 'Saved to localStorage';
+    };
+    // Load saved note from localStorage back into the textarea
+    document.getElementById('loadBtn').onclick = () => {
+      document.getElementById('note').value = localStorage.getItem('offlineNote') || '';
+      document.getElementById('status').textContent = 'Loaded from localStorage';
+    };
+
+    // Update the status message based on navigator.onLine
+    function updateStatus() {
+      document.getElementById('onlineStatus').textContent =
+        navigator.onLine ? 'Online — data can sync' : 'Offline — using local data only';
+    }
+    // Listen for network status changes
+    window.addEventListener('online', updateStatus);
+    window.addEventListener('offline', updateStatus);
+    updateStatus(); // Set initial status on page load
+
+
+    console.log('onLine is', navigator.onLine);
+window.addEventListener('offline', () => console.log('offline event fired'));
+  </script>
+</body>
+</html>

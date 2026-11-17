@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adaptive Register Form</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Default light theme colours */
+    :root { --bg: #ffffff; --text: #1e293b; }
+
+    /* Switch to dark colours when OS is in dark mode */
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #0f172a; --text: #f8fafc; }
+    }
+
+    body { background: var(--bg); color: var(--text); }
+    p { color: var(--text); }                 /* style.css sets its own p colour */
+    header h1 { color: white; }               /* readable on the dark header */
+    footer { background: var(--bg); color: var(--text); }
+
+    .adaptive-btn { transition: transform 0.3s; font-size: 16px; padding: 8px 16px; }
+    .adaptive-btn:hover { transform: scale(1.1); }
+
+    /* Disable animation for users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .adaptive-btn { transition: none; }
+    }
+
+    /* Full-width inputs on mobile; 16px font prevents iOS zoom */
+    @media (max-width: 600px) {
+      input:not([type="radio"]):not([type="checkbox"]),
+      select, textarea { width: 100%; font-size: 16px; box-sizing: border-box; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Register</h1>
+  </header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="register.html" class="register-link">Register</a>
+  </nav>
+  <main>
+    <form action="#" method="post">
+      <label>Full name: <input type="text" name="fullname" required minlength="2" pattern="[A-Za-z\s]+"></label><br><br>
+      <label>Email: <input type="email" name="email" required></label><br><br>
+      <label>Password: <input type="password" name="password" required minlength="8"></label><br><br>
+      <label>Age: <input type="number" name="age" min="16" max="99"></label><br><br>
+      <label>Start date: <input type="date" name="startdate"></label><br><br>
+      <label>Course:
+        <select name="course">
+          <option value="html">HTML</option>
+          <option value="css">CSS</option>
+        </select>
+      </label><br><br>
+      <label><input type="radio" name="plan" value="full"> Full-time</label>
+      <label><input type="radio" name="plan" value="part"> Part-time</label><br><br>
+      <label><input type="checkbox" name="terms" required> I agree to the terms</label><br><br>
+      <label>Comments: <textarea name="comments" rows="3"></textarea></label><br><br>
+      <button type="submit" class="adaptive-btn">Register</button>
+    </form>
+  </main>
+  <footer>
+    <p>&copy; 2026 Your Name</p>
+  </footer>
+</body>
+</html>
